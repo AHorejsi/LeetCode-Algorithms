@@ -1,50 +1,41 @@
-public class Solution {
-    private class IntListEqualityComparer : IEqualityComparer<IList<int>> {
-        public bool Equals(IList<int> left, IList<int> right) {
-            for (int index = 0; index < left.Count; ++index) {
-                if (left[index] != right[index]) {
-                    return false;
-                }
+public class Solution {    
+    public IList<IList<int>> ThreeSum(int[] nums) {
+        nums = nums.OrderBy(x => x).ToArray();
+        
+        IList<IList<int>> result = new List<IList<int>>();
+        
+        for (int i = 0; i < nums.Length && nums[i] <= 0; ++i) {
+            if (0 == i || nums[i - 1] != nums[i]) {
+                this.Search(i, nums, result);
             }
-            
-            return true;
         }
         
-        public int GetHashCode(IList<int> list) {
-            int modifier = 31;
-            int hashCode = 0;
-            
-            for (int index = 0; index < list.Count; ++index) {
-                hashCode += modifier * (int)Math.Pow(list[index], index);
-            }
-            
-            return hashCode;
-        }
+        return result;
     }
     
-    public IList<IList<int>> ThreeSum(int[] nums) {
-        var result = new HashSet<IList<int>>(new IntListEqualityComparer());
-        var duplicates = new HashSet<int>();
-        var seen = new Dictionary<int, int>();
+    private void Search(int i, int[] nums, IList<IList<int>> result) {
+        int low = i + 1;
+        int high = nums.Length - 1;
         
-        for (var i = 0; i < nums.Length; ++i) {
-            if (duplicates.Add(nums[i])) {
-                for (int j = i + 1; j < nums.Length; ++j) {
-                    int complement = -nums[i] - nums[j];
-                    
-                    if (seen.ContainsKey(complement) && seen[complement] == i) {
-                        var triplet = new int[] { nums[i], nums[j], complement };
-                        Array.Sort(triplet);
-                        result.Add(triplet);
-                    }
-                    
-                    if (!seen.TryAdd(nums[j], i)) {
-                        seen[nums[j]] = i;
-                    }
+        while (low < high) {
+            int sum = nums[i] + nums[low] + nums[high];
+            
+            if (sum < 0) {
+                ++low;
+            }
+            else if (sum > 0) {
+                --high;
+            }
+            else {
+                result.Add(new List<int> { nums[i], nums[low], nums[high] });
+                
+                ++low;
+                --high;
+                
+                while (low < high && nums[low] == nums[low - 1]) {
+                    ++low;
                 }
             }
         }
-        
-        return new List<IList<int>>(result);
     }
 }

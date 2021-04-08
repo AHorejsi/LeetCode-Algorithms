@@ -11,20 +11,24 @@ public class Solution {
     }
     
     private void ThousandsPlace(StringBuilder result, ref int num) {
-        if (num >= 1000) {
-            int place = num / 1000;
+        int factor = 1000;
+        
+        if (num >= factor) {
+            int place = num / factor;
             
             for (int temp = 0; temp < place; ++temp) {
                 result.Append('M');
             }
             
-            num -= place * 1000;
+            num -= place * factor;
         }
     }
     
     private void HundredsPlace(StringBuilder result, ref int num) {
-        if (num >= 100) {
-            int place = num / 100;
+        int factor = 100;
+        
+        if (num >= factor) {
+            int place = num / factor;
             
             if (4 == place) {
                 result.Append("CD");
@@ -46,13 +50,15 @@ public class Solution {
                 }
             }
             
-            num -= place * 100;
+            num -= place * factor;
         }
     }
     
     private void TensPlace(StringBuilder result, ref int num) {
-        if (num >= 10) {
-            int place = num / 10;
+        int factor = 10;
+        
+        if (num >= factor) {
+            int place = num / factor;
             
             if (4 == place) {
                 result.Append("XL");
@@ -74,7 +80,7 @@ public class Solution {
                 }
             }
             
-            num -= place * 10;
+            num -= place * factor;
         }
     }
     
