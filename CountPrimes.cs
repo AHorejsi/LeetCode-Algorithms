@@ -1,14 +1,11 @@
 public class Solution {
     public int CountPrimes(int high) {
-        bool[] prime = this.FindPrimes(high);
-        int primeCount = this.CountPrimes(prime);
+        if (high <= 2) {
+            return 0;
+        }
         
-        return primeCount;
-    }
-    
-    private bool[] FindPrimes(int high) {
         bool[] prime = new bool[high];
-        Array.Fill(prime, true);
+        this.Fill(prime);
         
         int end = (int)Math.Sqrt(prime.Length);
         
@@ -20,18 +17,12 @@ public class Solution {
             }
         }
         
-        return prime;
+        return prime.Count(val => val);
     }
     
-    private int CountPrimes(bool[] prime) {
-        int count = 0;
-        
+    private void Fill(bool[] prime) {
         for (int i = 2; i < prime.Length; ++i) {
-            if (prime[i]) {
-                ++count;
-            }
+            prime[i] = true;
         }
-        
-        return count;
     }
 }
