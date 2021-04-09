@@ -22,26 +22,23 @@ public class Solution {
         int result = 0;
         
         while (index >= 0) {
-            int num;
-            
             if (0 != index) {
                 string lastTwo = str.Substring(index - 1, 2);
-            
+                
+                int num;
                 bool success = Solution.numberMap.TryGetValue(lastTwo, out num);
 
                 if (success) {
                     result += num;
-
                     index -= 2;
+                    
                     continue;
                 }
             }
             
             string lastOne = str.Substring(index, 1);
 
-            num = Solution.numberMap[lastOne];
-
-            result += num;
+            result += Solution.numberMap[lastOne];
 
             --index;
         }
