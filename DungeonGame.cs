@@ -17,20 +17,20 @@ public class Solution {
         int downIndex = i + 1;
         int rightIndex = j + 1;
         
-        int downValue;
-        int rightValue;
+        int? downValue;
+        int? rightValue;
         int currentValue = dungeon[i][j];
         
         if (downIndex == rows && rightIndex == cols) {
             return (currentValue >= 0) ? 1 : -currentValue + 1;
         }
         else if (downIndex == rows) {
-            downValue = int.MaxValue;
+            downValue = null;
             rightValue = hp[i, rightIndex];
         }
         else if (rightIndex == cols) {
             downValue = hp[downIndex, j];
-            rightValue = int.MaxValue;
+            rightValue = null;
         }
         else {
             downValue = hp[downIndex, j];
@@ -40,18 +40,18 @@ public class Solution {
         int downHp = 1;
         int rightHp = 1;
         
-        if (downValue > currentValue) {
-            downHp = downValue - currentValue;
+        if (downValue.HasValue && downValue > currentValue) {
+            downHp = (int)downValue - currentValue;
         }
         
-        if (rightValue > currentValue) {
-            rightHp = rightValue - currentValue;
+        if (rightValue.HasValue && rightValue > currentValue) {
+            rightHp = (int)rightValue - currentValue;
         }
         
-        if (int.MaxValue == downValue) {
+        if (downValue is null) {
             return rightHp;
         }
-        else if (int.MaxValue == rightValue) {
+        else if (rightValue is null) {
             return downHp;
         }
         else {

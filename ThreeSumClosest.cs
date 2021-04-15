@@ -1,12 +1,12 @@
 public class Solution {
     public int ThreeSumClosest(int[] nums, int target) {
-        nums = nums.OrderBy(x => x).ToArray();
+        nums = nums.OrderBy(val => val).ToArray();
         
-        int closest = int.MaxValue - 10;
+        int closest = int.MaxValue / 10;
         
         for (int i = 0; i < nums.Length; ++i) {
             if (0 == i || nums[i - 1] != nums[i]) {
-                this.Search(i, nums, target, ref closest);
+                closest = this.SearchForClosest(i, nums, target, closest);
                 
                 if (closest == target) {
                     break;
@@ -17,7 +17,7 @@ public class Solution {
         return closest;
     }
     
-    private void Search(int i, int[] nums, int target, ref int closest) {
+    private int SearchForClosest(int i, int[] nums, int target, int closest) {
         int low = i + 1;
         int high = nums.Length - 1;
         
@@ -43,5 +43,7 @@ public class Solution {
                 break;
             }
         }
+        
+        return closest;
     }
 }
