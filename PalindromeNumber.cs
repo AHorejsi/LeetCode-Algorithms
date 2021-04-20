@@ -14,11 +14,11 @@ public class Solution {
             int pop = num % 10;
             num /= 10;
             
-            if (reverseNum > int.MaxValue / 10 || (reverseNum == int.MaxValue / 10 && pop > 7)) { 
-                return 0;
-            }
-            
-            reverseNum = reverseNum * 10 + pop;
+            try {
+				reverseNum = checked(reverseNum * 10 + pop);
+			} catch (OverflowException ex) {
+				return 0;
+			}
         }
         
         return reverseNum;

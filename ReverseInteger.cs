@@ -3,17 +3,14 @@ public class Solution {
         int reverseNum = 0;
         
         while (num != 0) {
-            int digit = num % 10;
+            int pop = num % 10;
             num /= 10;
             
-            if (reverseNum > int.MaxValue / 10 || (reverseNum == int.MaxValue / 10 && digit > 7)) { 
+            try {
+                reverseNum = checked(reverseNum * 10 + pop);
+            } catch (OverflowException ex) {
                 return 0;
             }
-            if (reverseNum < int.MinValue / 10 || (reverseNum == int.MinValue / 10 && digit < -8)) {
-                return 0;
-            }
-            
-            reverseNum = reverseNum * 10 + digit;
         }
         
         return reverseNum;
