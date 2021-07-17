@@ -1,27 +1,36 @@
 public class Solution {
     public int MinPathSum(int[][] grid) {
-        int lastRow = grid.Length - 1;
-        int lastCol = grid[0].Length - 1;
+        int rows = grid.Length;
+        int cols = grid[0].Length;
+        int lastRow = rows - 1;
+        int lastCol = cols - 1;
         
-        int[,] pathSums = new int[lastRow + 1, lastCol + 1];
+        int[] previousRow = new int[cols];
+        int[] currentRow = new int[cols];
         
         for (int i = lastRow; i >= 0; --i) {
+            int index = lastCol;
+            
             for (int j = lastCol; j >= 0; --j) {
-                if (i == lastRow && j == lastCol) {
-                    pathSums[i, j] = grid[i][j];
+                currentRow[index] = grid[i][j];
+                
+                if (i != lastRow && j != lastCol) {
+                    currentRow[index] += Math.Min(currentRow[index + 1], previousRow[index]);
                 }
-                else if (i == lastRow) {
-                    pathSums[i, j] = grid[i][j] + pathSums[i, j + 1];
+                else if (i != lastRow) {
+                    currentRow[index] += previousRow[index];
                 }
-                else if (j == lastCol) {
-                    pathSums[i, j] = grid[i][j] + pathSums[i + 1, j];
+                else if (j != lastCol) {
+                    currentRow[index] += currentRow[index + 1];
                 }
-                else {
-                    pathSums[i, j] = grid[i][j] + Math.Min(pathSums[i + 1, j], pathSums[i, j + 1]);
-                }
+                
+                --index;
             }
+            
+            Array.Copy(currentRow, previousRow, cols);
+            Array.Fill(currentRow, 0);
         }
         
-        return pathSums[0, 0];
+        return previousRow[0];
     }
 }

@@ -17,7 +17,7 @@ public class Solution {
             }
         }
         
-        return prime.Count(val => val);
+        return prime.Count(true);
     }
     
     private void Fill(bool[] prime) {

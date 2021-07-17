@@ -1,59 +1,30 @@
 public class Solution {
-    public int FirstMissingPositive(int[] nums) {
-        if (0 == nums.Length) {
-            return 1;
-        }
+    public int FirstMissingPositive(int[] nums) {        
+        IEnumerable<int> sortedNums = nums.Where(num => num > 0).OrderBy(num => num);
         
-        int min = nums.Min();
-        int max = nums.Max();
-        
-        if (min <= 0 && max <= 0) {
-            return 1;
-        }
-        else if (min >= 0 && max >= 0) {
-            return this.WithAllPositive(nums);
-        }
-        else {
-            return this.WithMix(nums);
-        }
+        return !sortedNums.Any() ? 1 : this.Search(sortedNums);
     }
     
-    private int WithAllPositive(int[] nums) {
-        SortedSet<int> set = new SortedSet<int>(nums);
-        
-        if (set.First() > 1) {
+    private int Search(IEnumerable<int> nums) {        
+        if (nums.First() > 1) {
             return 1;
         }
         
-        IEnumerator<int> iter = set.GetEnumerator();
-        bool more = true;
+        IEnumerator<int> iter = nums.GetEnumerator();
+        iter.MoveNext();
         
-        while (more) {
-            int current = iter.Current;
+        bool more;
+        int current;
+        int difference;
+        
+        do {
+            current = iter.Current;
             
             more = iter.MoveNext();
-            int next = iter.Current;
             
-            int difference = next - current;
-            
-            if (difference > 1) {
-                return current + 1;
-            }
-        }
+            difference = iter.Current - current;
+        } while (more && difference <= 1);
         
-        return set.Last() + 1;
-    }
-    
-    private int WithMix(int[] nums) {
-        SortedSet<int> positives = new SortedSet<int>(nums.Where(num => num > 0));
-        
-        int current = 1;
-        IEnumerator<int> iter = positives.GetEnumerator();
-        
-        while (iter.MoveNext() && iter.Current == current) {
-            ++current;
-        }
-        
-        return current;
+        return current + 1;
     }
 }
