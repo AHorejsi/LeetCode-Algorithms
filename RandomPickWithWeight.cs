@@ -1,20 +1,20 @@
 public class Solution {
     private static Random rand = new Random();
     private int[] nums;
-    private (int, int)[] probs;
+    private IntRange[] probs;
 
-    public Solution(int[] w) {
-        this.nums = w;
-        this.probs = new (int, int)[w.Length];
+    public Solution(int[] weights) {
+        this.nums = weights;
+        this.probs = new IntRange[weights.Length];
         
-        double sum = w.Sum();
+        double sum = weights.Sum();
         int current = 0;
         
-        for (int index = 0; index < w.Length; ++index) {
-            double probability = w[index] / sum;
+        for (int index = 0; index < weights.Length; ++index) {
+            double probability = weights[index] / sum;
             int length = (int)Math.Round(probability * 100);
             
-            this.probs[index] = (current + 1, current + length);
+            this.probs[index] = new IntRange(current + 1, current + length);
             current += length;
         }
     }
@@ -24,14 +24,24 @@ public class Solution {
         int end = this.probs.Length - 1;
         
         for (int index = 0; index < end; ++index) {
-            (int low, int high) = this.probs[index];
+            IntRange range = this.probs[index];
             
-            if (low <= result && high >= result) {
+            if (range.Low <= result && range.High >= result) {
                 return index;
             }
         }
         
         return this.probs.Length - 1;
+    }
+}
+
+public struct IntRange {
+    public int Low { get; }
+    public int High { get; }
+    
+    public IntRange(int low, int high) {
+        this.Low = low;
+        this.High = high;
     }
 }
 
