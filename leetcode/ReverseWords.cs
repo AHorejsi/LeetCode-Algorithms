@@ -1,5 +1,9 @@
 public class Solution {
     public string ReverseWords(string str) {
+        if (0 == str.Length) {
+            return "";
+        }
+        
         Stack<string> stack = this.BuildStack(str);
         StringBuilder sb = new StringBuilder();
         
