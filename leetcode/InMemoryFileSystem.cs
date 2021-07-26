@@ -1,31 +1,23 @@
 public sealed class File {
-    public string Name { get; set; }
-    public StringBuilder Content { get; private set; }
+    public string Name { get; }
+    public StringBuilder Content { get; }
     
     public File(string name, string content) {
         this.Name = name;
         this.Content = new StringBuilder(content);
     }
     
-    public String StringContent {
-        get => this.Content.ToString();
-        set {
-            this.Content.Clear();
-            this.Content.Append(value);
-        }
-    }
+    public String StringContent => this.Content.ToString();
 }
 
 public sealed class Folder {
     public string Name { get; set; }
-    internal IDictionary<string, File> files;
-    public Folder Parent { get; private set; }
-    internal IDictionary<string, Folder> subfolders;
+    private IDictionary<string, File> files;
+    private IDictionary<string, Folder> subfolders;
     
-    public Folder(string name, Folder parent) {
+    public Folder(string name) {
         this.Name = name;
         this.files = new SortedDictionary<string, File>();
-        this.Parent = parent;
         this.subfolders = new SortedDictionary<string, Folder>();
     }
     
@@ -92,7 +84,7 @@ public sealed class Folder {
         foreach (string directoryName in directories) {
             Folder subfolder;
             if (!currentFolder.subfolders.TryGetValue(directoryName, out subfolder)) {
-                subfolder = new Folder(directoryName, currentFolder);
+                subfolder = new Folder(directoryName);
                 currentFolder.subfolders.Add(directoryName, subfolder);
             }
             
@@ -134,19 +126,19 @@ public sealed class Folder {
 }
 
 public sealed class FileSystem {
-    public Folder Root { get; }
+    private Folder root;
 
     public FileSystem() {
-        this.Root = new Folder("", null);
+        this.root = new Folder("");
     }
     
-    public IList<string> Ls(string path) => this.Root.Ls(path);
+    public IList<string> Ls(string path) => this.root.Ls(path);
     
-    public void Mkdir(string path) => this.Root.Mkdir(path);
+    public void Mkdir(string path) => this.root.Mkdir(path);
     
-    public void AddContentToFile(string filePath, string content) => this.Root.AddContentToFile(filePath, content);
+    public void AddContentToFile(string filePath, string content) => this.root.AddContentToFile(filePath, content);
     
-    public string ReadContentFromFile(string filePath) => this.Root.ReadContentFromFile(filePath);
+    public string ReadContentFromFile(string filePath) => this.root.ReadContentFromFile(filePath);
 }
 
 /**
