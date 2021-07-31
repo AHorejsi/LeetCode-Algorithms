@@ -11,19 +11,6 @@
  */
 public class Solution {
     public ListNode ReverseBetween(ListNode head, int left, int right) {
-        if (left == right || head.next is null) {
-            return head;
-        }
-        if (head.next.next is null) {
-            if (head.val != head.next.val) {
-                head.val ^= head.next.val;
-                head.next.val ^= head.val;
-                head.val ^= head.next.val;
-            }
-            
-            return head;
-        }
-        
         (ListNode reverseHead, ListNode reverseTail, ListNode tail) result1 = this.LeadingNodes(head, left);
         (ListNode newReverseTail, ListNode newTail) result2 = this.ReverseRange(result1.reverseTail, result1.tail, right - left);
         this.TrailingNodes(result2.newReverseTail, result2.newTail);
@@ -46,7 +33,7 @@ public class Solution {
         return (reverseHead, reverseNode, node);
     }
     
-    private (ListNode, ListNode) ReverseRange(ListNode currentTail, ListNode tail, int size) {        
+    private (ListNode, ListNode) ReverseRange(ListNode currentTail, ListNode tail, int size) {  
         ListNode reverseList = new ListNode(tail.val);
         ListNode reverseTail = reverseList;
         ListNode node = tail.next;

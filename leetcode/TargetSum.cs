@@ -3,7 +3,7 @@ public class Solution {
     
     private int CalcExpression(int[] nums, int target, int index, int currentSum, int count) {
         if (nums.Length == index) {
-            return (currentSum == target) ? count + 1 : count;
+            return count + (currentSum == target ? 1 : 0);
         }
         
         count = this.CalcExpression(nums, target, index + 1, currentSum + nums[index], count);
