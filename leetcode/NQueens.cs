@@ -28,8 +28,6 @@ public class Solution {
     }
     
     private void Solve(IList<StringBuilder> board, int row, IList<IList<string>> solutions) {
-        Console.WriteLine($"{row} {board.Count}");
-        
         if (board.Count == row) {
             IList<string> result = board.Select((StringBuilder sb) => sb.ToString()).ToList();
             solutions.Add(result);
