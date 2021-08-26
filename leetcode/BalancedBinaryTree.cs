@@ -12,55 +12,40 @@
  * }
  */
 public class Solution {
-    private sealed class BalanceResult {
-        public int Height { get; set; }
-        public bool Balanced { get; }
-        
-        public BalanceResult(int height, bool balanced) {
-            this.Height = height;
-            this.Balanced = balanced;
-        }
-        
-        public BalanceResult(BalanceResult other) : this(other.Height, other.Balanced) {}
-    }
+    public bool IsBalanced(TreeNode root) => root is null || -1 != this.TreeHeight(root, 0);
     
-    public bool IsBalanced(TreeNode root) {
-        if (root is null) {
-            return true;
-        }
-        else {            
-            BalanceResult result = this.IsBalancedSubtree(root, new BalanceResult(0, true));
-
-            return result.Balanced;
-        }
-    }
-    
-    private BalanceResult IsBalancedSubtree(TreeNode node, BalanceResult result) {
-        BalanceResult leftResult = new BalanceResult(result);
-        BalanceResult rightResult = new BalanceResult(result);
+    private int TreeHeight(TreeNode node, int height) {
+        int leftHeight = height;
+        int rightHeight = height;
         
         if (!(node.left is null)) {
-            leftResult = this.IsBalancedSubtree(node.left, result);
-            ++(leftResult.Height);
-        }
-        if (!(node.right is null)) {
-            rightResult = this.IsBalancedSubtree(node.right, result);
-            ++(rightResult.Height);
-        }
-        
-        if (!(leftResult.Balanced && rightResult.Balanced)) {
-            return new BalanceResult(-1, false);
-        }
-        else {
-            int heightDifference = Math.Abs(leftResult.Height - rightResult.Height);
-        
-            if (heightDifference <= 1) {
-                int newHeight = Math.Max(leftResult.Height, rightResult.Height);
-                return new BalanceResult(newHeight, true);
+            leftHeight = this.TreeHeight(node.left, height);
+            
+            if (-1 == leftHeight) {
+                return leftHeight;
             }
             else {
-                return new BalanceResult(-1, false);
+                ++leftHeight;
             }
+        }
+        if (!(node.right is null)) {
+            rightHeight = this.TreeHeight(node.right, height);
+            
+            if (-1 == rightHeight) {
+                return rightHeight;
+            }
+            else {
+                ++rightHeight;
+            }
+        }
+        
+        int heightDifference = Math.Abs(leftHeight - rightHeight);
+
+        if (heightDifference <= 1) {
+            return Math.Max(leftHeight, rightHeight);
+        }
+        else {
+            return -1;
         }
     }
 }
