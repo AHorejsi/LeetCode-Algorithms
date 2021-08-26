@@ -1,19 +1,19 @@
 public class Solution {    
     public IList<IList<int>> ThreeSum(int[] nums) {
-        nums = nums.OrderBy(x => x).ToArray();
+        nums = nums.OrderBy((int num) => num).ToArray();
         
         IList<IList<int>> result = new List<IList<int>>();
         
         for (int i = 0; i < nums.Length && nums[i] <= 0; ++i) {
             if (0 == i || nums[i - 1] != nums[i]) {
-                this.Search(i, nums, result);
+                this.SearchSortedArray(i, nums, result);
             }
         }
         
         return result;
     }
     
-    private void Search(int i, int[] nums, IList<IList<int>> result) {
+    private void SearchSortedArray(int i, int[] nums, IList<IList<int>> result) {
         int low = i + 1;
         int high = nums.Length - 1;
         

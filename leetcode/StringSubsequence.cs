@@ -1,27 +1,16 @@
 public class Solution {
     public bool IsSubsequence(string str1, string str2) {
-        Queue<char> queue = this.CreateQueue(str1);
+        IEnumerator<char> chars1 = str1.GetEnumerator();
+        IEnumerator<char> chars2 = str2.GetEnumerator();
         
-        foreach (char value in str2) {
-            if (0 == queue.Count) {
-                return true;
-            }
-            
-            if (queue.Peek() == value) {
-                queue.Dequeue();
+        bool more = chars1.MoveNext();
+        
+        while (more && chars2.MoveNext()) {
+            if (chars1.Current == chars2.Current) {
+                more = chars1.MoveNext();
             }
         }
         
-        return 0 == queue.Count;
-    }
-    
-    private Queue<char> CreateQueue(string str1) {
-        Queue<char> queue = new Queue<char>();
-        
-        foreach (char value in str1) {
-            queue.Enqueue(value);
-        }
-        
-        return queue;
+        return !more;
     }
 }

@@ -6,8 +6,10 @@ public class Solution {
             return count + (currentSum == target ? 1 : 0);
         }
         
-        count = this.CalcExpression(nums, target, index + 1, currentSum + nums[index], count);
-        count = this.CalcExpression(nums, target, index + 1, currentSum - nums[index], count);
+        int nextIndex = index + 1;
+        
+        count = this.CalcExpression(nums, target, nextIndex, currentSum + nums[index], count);
+        count = this.CalcExpression(nums, target, nextIndex, currentSum - nums[index], count);
         
         return count;
     }

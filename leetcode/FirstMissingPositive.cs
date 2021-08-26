@@ -1,6 +1,6 @@
 public class Solution {
     public int FirstMissingPositive(int[] nums) {        
-        IEnumerable<int> sortedNums = nums.Where(num => num > 0).OrderBy(num => num);
+        IEnumerable<int> sortedNums = nums.Where((int num) => num > 0).OrderBy((int num) => num);
         
         return !sortedNums.Any() ? 1 : this.Search(sortedNums);
     }
