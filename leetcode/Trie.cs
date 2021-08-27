@@ -1,13 +1,11 @@
 public class Trie {
-    private class Node {        
+    private sealed class Node {        
         public char Value { get; }
-        public bool EndOfWord { get; set; }
-        private Dictionary<char, Node> children;
+        public bool EndOfWord { get; set; } = false;
+        private readonly Dictionary<char, Node> children = new Dictionary<char, Node>();
         
         public Node(char val) {
             this.Value = val;
-            this.children = new Dictionary<char, Node>();
-            this.EndOfWord = false;
         }
         
         public Node AddChild(char ch) {
@@ -19,24 +17,24 @@ public class Trie {
         
         public Node FindChildWith(char ch) {            
             Node node;
-            this.children.TryGetValue(ch, out node);
+            
+            if (!this.children.TryGetValue(ch, out node)) {
+                node = null;
+            }
             
             return node;
         }
     }
     
-    private static readonly char ROOT_VALUE = '\u0000';
-    private Node root;
+    private const char RootValue = '\u0000';
+    private readonly Node root = new Node(Trie.RootValue);
 
     /** Initialize your data structure here. */
-    public Trie() {
-        this.root = new Node(Trie.ROOT_VALUE);
-    }
+    public Trie() {}
     
     /** Inserts a word into the trie. */
     public void Insert(string word) {        
         (Node endpoint, int indexOfWord) = this.SearchForEndpoint(word);
-        
         
         foreach (char val in word.Skip(indexOfWord)) {
             endpoint = endpoint.AddChild(val);
@@ -45,13 +43,26 @@ public class Trie {
         endpoint.EndOfWord = true;
     }
     
+    /** Returns if the word is in the trie. */
+    public bool Search(string word) {
+        (Node endpoint, int indexOfWord) = this.SearchForEndpoint(word);
+        
+        return endpoint.EndOfWord && word.Length == indexOfWord;
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public bool StartsWith(string prefix) {
+        (_, int indexOfPrefix) = this.SearchForEndpoint(prefix);
+        
+        return prefix.Length == indexOfPrefix;
+    }
+    
     private (Node, int) SearchForEndpoint(string word) {
         Node node = this.root;
         int index = 0;
         
         while (index < word.Length) {
-            Node current = node;
-            current = current.FindChildWith(word[index]);
+            Node current = node.FindChildWith(word[index]);
             
             if (current is null) {
                 break;
@@ -63,36 +74,6 @@ public class Trie {
         }
         
         return (node, index);
-    } 
-    
-    /** Returns if the word is in the trie. */
-    public bool Search(string word) {
-        Node node = this.root;
-        
-        foreach (char val in word) {
-            node = node.FindChildWith(val);
-            
-            if (node is null) {
-                return false;
-            }
-        }
-        
-        return node.EndOfWord;
-    }
-    
-    /** Returns if there is any word in the trie that starts with the given prefix. */
-    public bool StartsWith(string prefix) {
-        Node node = this.root;
-        
-        foreach (char val in prefix) {
-            node = node.FindChildWith(val);
-            
-            if (node is null) {
-                return false;
-            }
-        }
-        
-        return true;
     }
 }
 

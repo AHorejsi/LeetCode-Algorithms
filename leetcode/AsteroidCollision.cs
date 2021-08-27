@@ -1,11 +1,8 @@
 public class Solution {
     public int[] AsteroidCollision(int[] asteroids) {
         Stack<int> stack = new Stack<int>(asteroids.Length);
-        int index = 0;
         
-        while (index < asteroids.Length) {
-            int current = asteroids[index];
-            
+        foreach (int current in asteroids) {            
             if (0 != stack.Count) {
                 int prev = stack.Peek();
 
@@ -39,8 +36,6 @@ public class Solution {
             else {
                 stack.Push(current);
             }
-            
-            ++index;
         }
         
         int[] result = stack.ToArray();
