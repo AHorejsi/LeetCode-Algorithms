@@ -1,7 +1,7 @@
 public class Solution {
     public bool IsValidSudoku(char[][] board) {
-        int dimensions = 9;
-        int boxDimensions = 3;
+        const int dimensions = 9;
+        const int boxDimensions = 3;
         
         int[] rowBitVectors = new int[dimensions];
         int[] columnBitVectors = new int[dimensions];
@@ -11,7 +11,7 @@ public class Solution {
             for (int j = 0; j < dimensions; ++j) {
                 char current = board[i][j];
                 
-                if (Char.IsNumber(current)) {
+                if ('.' != current) {
                     int charNumber = current - '0';
                     int mask = 1 << charNumber;
                     

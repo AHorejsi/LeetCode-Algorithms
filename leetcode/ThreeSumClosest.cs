@@ -1,6 +1,6 @@
 public class Solution {
     public int ThreeSumClosest(int[] nums, int target) {
-        nums = nums.OrderBy(val => val).ToArray();
+        Array.Sort(nums);
         
         int closest = int.MaxValue / 10;
         

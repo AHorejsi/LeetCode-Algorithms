@@ -3,12 +3,7 @@ public class Solution {
         int left = 0;
         int right = str.Length - 1;
         
-        int validCount = str.Count((char ch) => char.IsLetter(ch) || char.IsNumber(ch));
-        
-        while (left < right) {
-            char leftCurrent = str[left];
-            char rightCurrent = str[right];
-            
+        while (left < right) {            
             while (!(char.IsLetter(str[left]) || char.IsNumber(str[left]))) {
                 ++left;
                 
