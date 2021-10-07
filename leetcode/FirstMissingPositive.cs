@@ -19,9 +19,7 @@ public class Solution {
         
         do {
             current = iter.Current;
-            
             more = iter.MoveNext();
-            
             difference = iter.Current - current;
         } while (more && difference <= 1);
         
