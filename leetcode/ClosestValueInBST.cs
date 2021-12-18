@@ -13,38 +13,64 @@
  */
 public class Solution {
     public int ClosestValue(TreeNode root, double target) {
-        Stack<TreeNode> stack = new Stack<TreeNode>();
+        int lesserValue = this.FindLesser(root, target);
+        int greaterValue = this.FindGreater(root, target);
+        
+        double differenceFromLesser = Math.Abs(target - lesserValue);
+        double differenceFromGreater = Math.Abs(target - greaterValue);
+        
+        return differenceFromLesser < differenceFromGreater ? lesserValue : greaterValue;
+    }
+    
+    private int FindLesser(TreeNode root, double target) {
         TreeNode node = root;
-        TreeNode parent = null;
         
-        int previousValue = -1;
-        double previousDifference = double.MaxValue;
+        int currentValue = int.MaxValue;
+        double currentDifference = double.MaxValue;
         
-        while (!(node is null) || 0 != stack.Count) {
-            if (!(node is null)) {
-                stack.Push(node);
-                
-                parent = node;
+        while (!(node is null)) {
+            double difference = target - node.val;
+            
+            if (difference < 0) {
                 node = node.left;
             }
-            else {
-                node = stack.Pop();
+            else if (difference > 0) {
+                currentValue = node.val;
+                currentDifference = difference;
                 
-                double currentDifference = node.val - target;
-                
-                if (currentDifference >= 0) {
-                    return Math.Abs(previousDifference) < Math.Abs(currentDifference) ? previousValue : node.val;
-                }
-                else {
-                    previousDifference = currentDifference;
-                    previousValue = node.val;
-                }
-                
-                parent = node;
                 node = node.right;
+            }
+            else {
+                return node.val;
             }
         }
         
-        return parent.val;
+        return currentValue;
+    }
+    
+    private int FindGreater(TreeNode root, double target) {
+        TreeNode node = root;
+        
+        int currentValue = int.MaxValue;
+        double currentDifference = double.MaxValue;
+        
+        while (!(node is null)) {
+            double difference = target - node.val;
+            
+            if (difference < 0) {
+                currentValue = node.val;
+                currentDifference = difference;
+                
+                node = node.left;
+            }
+            else if (difference > 0) {
+                node = node.right;
+            }
+            else {
+                return node.val;
+            }
+        }
+        
+        return currentValue;
     }
 }

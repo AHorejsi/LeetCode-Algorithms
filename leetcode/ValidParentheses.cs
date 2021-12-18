@@ -1,9 +1,12 @@
 public class Solution {
+    private static readonly HashSet<char> StartChars = new HashSet<char>() { '[', '(', '{' };
+    private static readonly Dictionary<char, char> EndChars = new Dictionary<char, char>() { { ']', '['}, { ')', '(' }, { '}', '{' } };
+    
     public bool IsValid(string str) {
-        var stack = new Stack<char>();
+        Stack<char> stack = new Stack<char>();
         
         foreach (char ch in str) {
-            if ('[' == ch || '(' == ch || '{' == ch) {
+            if (Solution.StartChars.Contains(ch)) {
                 stack.Push(ch);
             }
             else {
@@ -12,8 +15,9 @@ public class Solution {
                 }
                 else {
                     char top = stack.Peek();
+                    char other;
                     
-                    if (']' == ch && top == '[' || ')' == ch && top == '(' || '}' == ch && top == '{') {
+                    if (Solution.EndChars.TryGetValue(ch, out other) && top == other) {
                         stack.Pop();
                     }
                     else {
