@@ -11,9 +11,6 @@ public class MinStack {
     public MinStack() {}
     
     public void Push(int val) {
-		// Insert the new element into the main stack
-        this.main.Push(val);
-        
 		// Insert the element into the "mins" stack if  the
 		// whole stack is empty or if the current minimum value
 		// is greater than or equal to the new element. The reason
@@ -23,6 +20,9 @@ public class MinStack {
         if (0 == this.main.Count || this.mins.Peek() >= val) {
             this.mins.Push(val);
         }
+        
+        // Insert the new element into the main stack
+        this.main.Push(val);
     }
     
     public void Pop() {
