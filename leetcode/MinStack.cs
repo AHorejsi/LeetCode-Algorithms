@@ -20,7 +20,7 @@ public class MinStack {
 		// why add equal values as well is because we need to remove
 		// the correct instance of the minimum value even if there
 		// are duplicates
-        if (0 == this.main.Count || mins.Peek() >= val) {
+        if (0 == this.main.Count || this.mins.Peek() >= val) {
             this.mins.Push(val);
         }
     }
