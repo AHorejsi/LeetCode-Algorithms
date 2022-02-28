@@ -34,7 +34,7 @@ public class Solution {
     
     // Visits the current space, then searches adjacent positions through a depth-first search. Expands outward and only
     // stops when water is reached or an already visited space is encountered. Returns whether
-    // or "true" when new land was found, false "otherwise"
+    // or "true" when new land was found, "false" otherwise
     private bool TraverseIsland(char[][] grid, bool[,] visited, int rowIndex, int colIndex) {
         if (
 			grid.Length == rowIndex || -1 == rowIndex ||
