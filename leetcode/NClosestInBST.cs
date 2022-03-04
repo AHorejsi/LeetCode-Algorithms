@@ -22,7 +22,7 @@ public class Solution {
         // Find the value strictly greater than "target".
         // The "+ 0.1" exists to ensure the returned value
         // is strictly greater than "target" and a value
-        // equal to "target" is not returned. The "+ 0.1" ensures
+        // equal to "target" is not returned. This ensures
         // that "lesser" points to a distinct value than greater
         double? greater = this.FindGreater(root, target + 0.1);
         
