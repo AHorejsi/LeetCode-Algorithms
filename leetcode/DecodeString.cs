@@ -10,7 +10,7 @@ public class Solution {
         
             if (char.IsLetter(val)) {
                 // If "val" is a letter, then the current subcomponent
-                // is juts a single character
+                // is just a single character
                 
                 sb.Append(val);
                 ++index;
