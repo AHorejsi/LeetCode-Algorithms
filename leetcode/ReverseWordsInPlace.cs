@@ -1,5 +1,5 @@
 public class Solution {
-    // There is only one char that separates the words in the string
+    // There is only one char that separates the words in the string.
     // This is that separator char
     private const char Separator = ' ';
     
