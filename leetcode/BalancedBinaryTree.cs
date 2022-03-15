@@ -12,7 +12,7 @@
  * }
  */
 public class Solution {
-    // This value will be used  to indicate that a given subtree is imbalanced
+    // Used  to indicate that a given subtree is imbalanced
     private const int ImbalancedHeight = -1;
     
     public bool IsBalanced(TreeNode root) => root is null || Solution.ImbalancedHeight != this.TreeHeight(root, 0);
