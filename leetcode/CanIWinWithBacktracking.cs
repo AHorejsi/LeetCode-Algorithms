@@ -9,7 +9,7 @@ public class Solution {
         public Player Turn { get; private set; }
         
         public GameState(int choosable, int desiredTotal) {
-            this.choosable = 32 == choosable ? ~0 : ~(~0 << choosable);
+            this.choosable = 32 == choosable ? -1 : ~(~0 << choosable);
             this.desiredTotal = desiredTotal;
             this.length = choosable;
             this.score = 0;
