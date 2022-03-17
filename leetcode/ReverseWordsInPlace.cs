@@ -7,8 +7,9 @@ public class Solution {
         // Reverse the whole string. Doing this places the
         // the substrings that represent the individual
         // words in the correct spots, but the individual
-        // words are in reverse order. After this, we will
-        // reverse the individual words
+        // words have their letters in reverse order. 
+        // After this, we will reverse the order of the letters
+        // in each word separately
         this.Reverse(str, 0, str.Length - 1);
         
         // Index of the leftmost char of the current word
