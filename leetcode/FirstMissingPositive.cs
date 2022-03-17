@@ -18,7 +18,7 @@ public class Solution {
             IEnumerable<int> sortedNums = filteredNums.OrderBy((int num) => num);
             
             // If the first number in "sortedNums" after sorting is greater than 1, the
-            // smallest missing positive in general, then the answer is 1. Otherwise,
+            // smallest missing positive in general is the correct answer. Otherwise,
             // we must search for the smallest missing positive
             return sortedNums.First() > 1 ? 1 : this.Search(sortedNums);
         }
@@ -34,8 +34,8 @@ public class Solution {
         // The last value retrieved by the enumerator
         int current;
         
-        // The difference between two adjacent elements of in "nums"
-        // If a difference is found that is greater than 1, then a gap
+        // If the difference between two adjacent
+        // elements is found that is greater than 1, then a gap
         // exists with a missing positive number
         int difference;
         
@@ -56,7 +56,7 @@ public class Solution {
         } while (more && difference <= 1);
         
         // Return "current + 1" because we need the smallest element
-        // not present in "nums." The variable "current" points to the
+        // NOT present in "nums." The variable "current" points to the
         // smaller of the two last elements returned by the enumerator.
         // We are ensured a positive number because of the previous filtering
         // of negative numbers and sorting in ascending order
