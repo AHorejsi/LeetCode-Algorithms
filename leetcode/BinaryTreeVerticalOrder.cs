@@ -13,25 +13,25 @@
  */
 public class Solution {
     public IList<IList<int>> VerticalOrder(TreeNode root) {
-        // List of objects containing info on each elements column, depth and
-        // the value itself
+        // List of objects containing info on each element's column, depth and value
         LinkedList<dynamic> order = new LinkedList<dynamic>();
         
-        // Traverse the tree and record its column and depth. The column
+        // Traverse the tree and record each node's column and depth. The column
         // of the root node is considered to be 0. The column values are used
         // to group elements in the same columns together and are not used as indices
         this.TraverseTree(root, order, 0, 0);
         
         return order
-            .OrderBy((dynamic elem) => elem.Column) // Sort elements based on their columns so that they are returned in vertical order
+            .OrderBy((dynamic elem) => elem.Column) // Sort elements based on their columns. Ensures that the elements are returned in vertical order
             .GroupBy((dynamic elem) => elem.Column) // Group elements together based on their previously assigned column so they can be placed into the same list later
             .Select(
                 (IGrouping<dynamic, dynamic> column) => column
                     .OrderBy((dynamic elem) => elem.Depth) // Sort each group in terms of depth. Ensures that the elements are returned in vertical order
-                    .Select((dynamic elem) => (int)elem.Value) // Extract the value from the node. This is what needs to be returned
+                    .Select((dynamic elem) => elem.Value) // Extract the value from the node. This is what needs to be returned
+                    .Cast<int>() // Convert values from dynamic type to int type
                     .ToList()
                 )
-            .Cast<IList<int>>()
+            .Cast<IList<int>>() // Convert from "List" class to "IList" interface
             .ToList();
     }
     
@@ -39,6 +39,8 @@ public class Solution {
         if (!(node is null)) {
             // Record the current element
             order.AddLast(new { Column = column, Depth = depth, Value = node.val });
+            
+            // The next, lower depth
             int nextDepth = depth + 1;
             
             // Move to the left subtree. The left subtree is considered to have
