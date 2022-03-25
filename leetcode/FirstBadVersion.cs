@@ -37,7 +37,7 @@ public class Solution : VersionControl {
             }
         }
         
-        // In this case, there is no 
+        // In this case, there are no bad versions
         return -1;
     }
 }
