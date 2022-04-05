@@ -19,7 +19,7 @@ public class Solution {
         // include both in output
         string num = 0 == decimalPart.Length ? $"{integerPart}" : $"{integerPart}.{decimalPart}";
         
-        // Check "isNegative flag" for whether or not negative sign shall be added
+        // Check "isNegative" flag for whether or not negative sign shall be added
         string signedNum = isNegative ? $"-{num}" : num;
         
         return signedNum;
