@@ -24,7 +24,7 @@ public class Solution {
             }
             
             // The distance from current "head" to the next "head", increases
-            // by a factor of 2 based on whether or not the head was removed
+            // by a factor of 2
             step *= 2;
             
             // Swap direction of traversal
