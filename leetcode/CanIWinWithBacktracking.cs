@@ -87,12 +87,12 @@ public class Solution {
             }
             else {
                 state.SwapTurn();
-                bool currentPlayerWins = this.PlayerMove(state);
+                bool winState = this.PlayerMove(state);
                 state.SwapTurn();
 
                 state.Unpick(val);
 
-                switch (state.Turn, currentPlayerWins) {
+                switch (state.Turn, winState) {
                 case (Player.One, true):
                     return true;
                 case (Player.Two, false):
