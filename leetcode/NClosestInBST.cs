@@ -67,7 +67,7 @@ public class Solution {
             lesser = this.FindLesser(root, (double)lesser - 0.1);
         }
         
-        // Only enter is the first loop did not insert the necessary
+        // Only enter if the first loop did not insert the necessary
         // "amount" of values and if the first loop terminated because
         // "lesser" was null. Only progresses "greater" to larger values
         // until the necessary "amount" of values is reached
