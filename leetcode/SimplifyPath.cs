@@ -19,8 +19,8 @@ public class Solution {
         // Used to track which directory is the topmost/bottommost
         var stack = new Stack<string>(parts.Length);
         
-        foreach (var part in parts) {
-            char first = part[0];
+        foreach (string part in parts) {
+            var first = part[0];
             
             if (".." == part) {
                 // A double dot indicates that we need to move to the parent directory
