@@ -53,7 +53,9 @@ public class Solution {
             var glassIndex = current.GlassIndex;
 
             // Represents the amount of liquid that will pour into
-            // child glasses in the tower
+            // child glasses in the tower. This can cause the child
+            // glasses to overflow which can then cascade to further
+            // child glasses
             var takeaway = tower[rowIndex][glassIndex] - 1.0;
 
             // If there is no liquid to take away from the current glass,
@@ -72,7 +74,8 @@ public class Solution {
                 // 
                 if (nextRowIndex < tower.Count) {
                     // The amount of liquid overflowing from the current glass.
-                    // This will be put into successive glasses
+                    // This will be put into successive glasses. The overflow
+                    // is always split evenly between the two child glasses
                     var overflow = takeaway / 2.0;
 
                     // Add liquid to the left child glass
