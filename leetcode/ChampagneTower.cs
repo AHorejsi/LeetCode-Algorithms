@@ -71,7 +71,8 @@ public class Solution {
                 // The glass index of the right child glass
                 var nextGlassIndex = glassIndex + 1;
 
-                // 
+                // If the following row index is beyond the bounds of the tower
+                // then it does not need to have its value tracked
                 if (nextRowIndex < tower.Count) {
                     // The amount of liquid overflowing from the current glass.
                     // This will be put into successive glasses. The overflow
