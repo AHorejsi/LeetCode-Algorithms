@@ -19,9 +19,13 @@ public class Solution {
         // Count the elements of the binary search tree
         this.FindMode(root, counts);
 
+        // Get the maximum count present
         var maxCount = counts.Values.Max();
+
+        // Filter by elements that have the maximum count
         var result = counts.Where((kvp) => kvp.Value == maxCount);
 
+        // Convert to intended return type
         return result.Select((kvp) => kvp.Key).ToArray();
     }
 
