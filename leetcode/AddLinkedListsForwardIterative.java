@@ -42,6 +42,7 @@ class Solution {
             rightDeque = temp;
         }
         
+	// Prepend shorter deque with zeroes
         while (leftDeque.size() < rightDeque.size()) {
             leftDeque.addLast(0);
         }
