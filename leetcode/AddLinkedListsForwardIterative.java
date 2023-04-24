@@ -34,6 +34,9 @@ class Solution {
     
     private void PrependZeroes(ArrayDeque<Integer> leftDeque, ArrayDeque<Integer> rightDeque) {
         if (leftDeque.size() > rightDeque.size()) {
+	    // If left deque is longer than right deque, 
+	    // swap both variables so that we end up prepending the shorter one with zeroes
+		
             ArrayDeque<Integer> temp = leftDeque;
             leftDeque = rightDeque;
             rightDeque = temp;
@@ -45,58 +48,58 @@ class Solution {
     }
     
     private ListNode ComputeResult(ArrayDeque<Integer> left, ArrayDeque<Integer> right) {
-		// Current node to be filled in with a value for the output list
+	// Current node to be filled in with a value for the output list
         ListNode node = new ListNode();
 		
-		// Represents whether or not the previous addition of two digits
-		// means that a one needs to be carried to the next addition of
-		// two digits
+	// Represents whether or not the previous addition of two digits
+	// means that a one needs to be carried to the next addition of
+	// two digits
         boolean carryOne = false;
         
-		// Since the shorter number was prepended with zeroes, both deques
-		// have the same size. Therefore, we only have to check if one of them is empty
+	// Since the shorter number was prepended with zeroes, both deques
+	// have the same size. Therefore, we only have to check if one of them is empty
         while (!left.isEmpty()) {
-			// Digit of left number
-            int leftDigit = left.removeFirst();
+		// Digit of left number
+            	int leftDigit = left.removeFirst();
 			
-			// Digit of right number
-            int rightDigit = right.removeFirst();
+		// Digit of right number
+            	int rightDigit = right.removeFirst();
 			
-			// Sum of both digits
-            int result = leftDigit + rightDigit;
+		// Sum of both digits
+            	int result = leftDigit + rightDigit;
             
-			// If previous addition of digits caused in "result",
-			// being 10 or more, then add one
-            if (carryOne) {
-                ++result;
-            }
+		// If previous addition of digits caused in "result",
+		// being 10 or more, then add one
+	    	if (carryOne) {
+			++result;
+	    	}
             
-			// If current addition of digits and carrying the one
-			// caused "result" being 10 or more, then subtracted 10
-			// from "result" and set "carryOne" to true. Otherwise
-			// set "carryOne" to false
-            if (result >= 10) {
-                result -= 10;
-                carryOne = true;
-            }
-            else {
-                carryOne = false;
-            }
+		// If current addition of digits and carrying the one
+		// caused "result" being 10 or more, then subtracted 10
+		// from "result" and set "carryOne" to true. Otherwise
+		// set "carryOne" to false
+		if (result >= 10) {
+			result -= 10;
+			carryOne = true;
+		}
+		else {
+			carryOne = false;
+		}
             
-			// Assign new digit to the current node
-            node.val = result;
+		// Assign new digit to the current node
+            	node.val = result;
             
-			// Create a new node and attach to the node that was just
-			// assigned a digit
-            ListNode newNode = new ListNode();
-            newNode.next = node;
-            node = newNode;
-        }
+		// Create a new node and attach to the node that was just
+		// assigned a digit
+            	ListNode newNode = new ListNode();
+            	newNode.next = node;
+            	node = newNode;
+	}
         
-		// If "carryOne" is true after adding all numbers, output value
-		// must be prepended with a 1. Otherwise, we have an extra node
-		// in the front of the list because create a new node
-		// at the end of each iteration of the above loop. So we return "node.next"
+	// If "carryOne" is true after adding all numbers, output value
+	// must be prepended with a 1. Otherwise, we have an extra node
+	// in the front of the list because create a new node
+	// at the end of each iteration of the above loop. So we return "node.next"
         if (carryOne) {
             node.val = 1;
             
