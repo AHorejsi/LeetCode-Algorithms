@@ -19,7 +19,7 @@ public class Solution {
         // Represents the sum of all path numbers
         var totalSum = 0;
 
-        // Initialized recursion
+        // Initialize recursion
         stack.Push(new Path(root.val, root));
 
         while (0 != stack.Count) {
