@@ -13,19 +13,30 @@
  */
 public class Solution {
     public int ClosestValue(TreeNode root, double target) {
-        int lesserValue = this.FindLesser(root, target);
-        int greaterValue = this.FindGreater(root, target);
+        int? lesserValue = this.FindLesser(root, target);
+        int? greaterValue = this.FindGreater(root, target);
         
-        double differenceFromLesser = Math.Abs(target - lesserValue);
-        double differenceFromGreater = Math.Abs(target - greaterValue);
-        
-        return differenceFromLesser < differenceFromGreater ? lesserValue : greaterValue;
+        if (lesserValue is null) {
+            return (int)greaterValue;
+        }
+        else if (greaterValue is null) {
+            return (int)lesserValue;
+        }
+        else {
+            int nonnullLesser = (int)lesserValue;
+            int nonnullGreater = (int)greaterValue;
+            
+            double differenceFromLesser = target - nonnullLesser;
+            double differenceFromGreater = nonnullGreater - target;
+
+            return differenceFromLesser < differenceFromGreater ? nonnullLesser : nonnullGreater;
+        }
     }
     
-    private int FindLesser(TreeNode root, double target) {
+    private int? FindLesser(TreeNode root, double target) {
         TreeNode node = root;
         
-        int currentValue = int.MaxValue;
+        int? currentValue = null;
         double currentDifference = double.MaxValue;
         
         while (!(node is null)) {
@@ -48,10 +59,10 @@ public class Solution {
         return currentValue;
     }
     
-    private int FindGreater(TreeNode root, double target) {
+    private int? FindGreater(TreeNode root, double target) {
         TreeNode node = root;
         
-        int currentValue = int.MaxValue;
+        int? currentValue = null;
         double currentDifference = double.MaxValue;
         
         while (!(node is null)) {

@@ -43,7 +43,7 @@ public class Solution {
         
         public GameState(int choosable, int desiredTotal) {
             this.states = new Dictionary<WinState, Player>();
-            this.choosable = 32 == choosable ? ~0 : ~(~0 << choosable);
+            this.choosable = 32 == choosable ? -1 : ~(~0 << choosable);
             this.desiredTotal = desiredTotal;
             this.length = choosable;
             this.score = 0;
@@ -147,12 +147,12 @@ public class Solution {
                 }
                 else {
                     state.SwapTurn();
-                    bool currentPlayerWins = this.PlayerMove(state);
+                    bool winState = this.PlayerMove(state);
                     state.SwapTurn();
                     
                     state.Unpick(val);
                     
-                    switch (state.Turn, currentPlayerWins) {
+                    switch (state.Turn, winState) {
                     case (Player.One, true):
                         state.Save(state.Turn);
                         return true;

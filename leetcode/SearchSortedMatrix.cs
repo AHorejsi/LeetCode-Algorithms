@@ -11,13 +11,13 @@ public class Solution {
             
             if (target < value) {
                 // All values in the current column are greater than "target",
-                // not counting ignored values
+                // not counting previously ignored values
                 
                 --colIndex;
             }
             else if (target > value) {
                 // All values in the current row are less than "target", not
-                // counting ignored values
+                // counting previously ignored values
                 
                 ++rowIndex;
             }
