@@ -8,7 +8,7 @@ public class Solution {
         var finishedCount = 1;
         var last = fleets[0];
         
-        for (int index = 1; index < fleets.Count; ++index) {
+        for (var index = 1; index < fleets.Count; ++index) {
             var current = fleets[index];
             
             // If the current fleet cannot reach the fleet ahead of it,
