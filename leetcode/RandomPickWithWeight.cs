@@ -7,12 +7,12 @@ public class Solution {
         this.nums = weights;
         this.probs = new IntRange[weights.Length];
         
-        double sum = weights.Sum();
-        int current = 0;
+        var sum = weights.Sum();
+        var current = 0;
         
         for (int index = 0; index < weights.Length; ++index) {
-            double probability = weights[index] / sum;
-            int length = (int)Math.Round(probability * 100);
+            var probability = weights[index] / sum;
+            var length = (int)Math.Round(probability * 100);
             
             this.probs[index] = new IntRange(current + 1, current + length);
             current += length;
@@ -20,11 +20,11 @@ public class Solution {
     }
     
     public int PickIndex() {
-        int result = Solution.rand.Next(1, 101);
-        int end = this.probs.Length - 1;
+        var result = Solution.rand.Next(1, 101);
+        var end = this.probs.Length - 1;
         
-        for (int index = 0; index < end; ++index) {
-            IntRange range = this.probs[index];
+        for (var index = 0; index < end; ++index) {
+            var range = this.probs[index];
             
             if (range.Low <= result && range.High >= result) {
                 return index;
