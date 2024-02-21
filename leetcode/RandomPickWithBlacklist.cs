@@ -5,12 +5,9 @@ public class Solution {
     public Solution(int max, int[] blacklist) {
         this.ranges = new List<Range>();
 
-        var iter = blacklist.OrderBy(number => number).GetEnumerator();
         var low = 0;
 
-        while (iter.MoveNext()) {
-            var high = iter.Current;
-
+        foreach (var high in blacklist.OrderBy(number => number)) {
             this.AddRange(low, high);
 
             low = high + 1;
