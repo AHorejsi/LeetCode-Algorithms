@@ -1,47 +1,47 @@
 public class Solution {
-    private static Random rand = new Random();
-    private int[] nums;
-    private IntRange[] probs;
+    private static readonly Random rand = new Random();
+    private readonly List<float> cdf;
 
     public Solution(int[] weights) {
-        this.nums = weights;
-        this.probs = new IntRange[weights.Length];
-        
+        this.cdf = this.ComputeCdf(weights);
+    }
+
+    private List<float> ComputeCdf(int[] weights) {
+        var cdf = new List<float>(weights.Length);
         var sum = weights.Sum();
-        var current = 0;
-        
-        for (int index = 0; index < weights.Length; ++index) {
-            var probability = weights[index] / sum;
-            var length = (int)Math.Round(probability * 100);
-            
-            this.probs[index] = new IntRange(current + 1, current + length);
-            current += length;
+        var probs = weights.Select(weight => weight / (float)sum);
+
+        cdf.Add(probs.First());
+
+        foreach (var probability in probs.Skip(1)) {
+            cdf.Add(probability + cdf.Last());
         }
+
+        return cdf;
     }
     
     public int PickIndex() {
-        var result = Solution.rand.Next(1, 101);
-        var end = this.probs.Length - 1;
-        
-        for (var index = 0; index < end; ++index) {
-            var range = this.probs[index];
-            
-            if (range.Low <= result && range.High >= result) {
-                return index;
+        var rand = Solution.rand.NextSingle();
+
+        var low = 0;
+        var high = this.cdf.Count - 1;
+
+        while (low <= high) {
+            var mid = (low + high) / 2;
+            var value = this.cdf[mid];
+
+            if (rand > value) {
+                low = mid + 1;
+            }
+            else if (rand < value) {
+                high = mid - 1;
+            }
+            else {
+                return mid;
             }
         }
-        
-        return this.probs.Length - 1;
-    }
-}
 
-public struct IntRange {
-    public int Low { get; }
-    public int High { get; }
-    
-    public IntRange(int low, int high) {
-        this.Low = low;
-        this.High = high;
+        return high + 1;
     }
 }
 
